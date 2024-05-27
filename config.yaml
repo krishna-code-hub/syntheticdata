@@ -1,0 +1,50 @@
+tables:
+  - name: users
+    order: 1
+    columns:
+      - name: user_id
+        type: integer
+        primary_key: true
+      - name: user_name
+        type: string
+      - name: email
+        type: string
+
+  - name: orders
+    order: 2
+    columns:
+      - name: order_id
+        type: integer
+        primary_key: true
+      - name: user_id
+        type: integer
+        foreign_key:
+          table: users
+          column: user_id
+      - name: product_id
+        type: integer
+      - name: order_date
+        type: date
+
+  - name: products
+    order: 3
+    columns:
+      - name: product_id
+        type: integer
+        primary_key: true
+      - name: product_name
+        type: string
+      - name: price
+        type: float
+
+relationships:
+  - type: one_to_many
+    from_table: users
+    from_column: user_id
+    to_table: orders
+    to_column: user_id
+  - type: one_to_many
+    from_table: products
+    from_column: product_id
+    to_table: orders
+    to_column: product_id
